@@ -10,10 +10,7 @@ const Empleados = () => {
   useEffect(() => {
     const fetchEmpleados = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:9000/api/empleado', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await axios.get('http://localhost:9000/api/empleados');
         setEmpleados(response.data);
       } catch (error) {
         console.error('Error al obtener empleados', error);
@@ -26,7 +23,7 @@ const Empleados = () => {
   const handleAddEmpleado = async () => {
     try {
       const newEmpleado = { nombre, salario, fecha_ingreso };
-      await axios.post('http://localhost:9000/api/empleado', newEmpleado);
+      await axios.post('http://localhost:9000/api/empleados', newEmpleado);
       setEmpleados([...empleados, newEmpleado]);
     } catch (error) {
       console.error('Error al agregar empleado', error);
@@ -38,7 +35,7 @@ const Empleados = () => {
       <h1>Empleados</h1>
       <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
       <input type="text" placeholder="Salario" value={salario} onChange={(e) => setSalario(e.target.value)} />
-      <input type="date" placeholder="Fecha de Ingreso" value={fecha_ingreso} onChange={(e) => setFecha_ingreso(e.target.value)} />
+      <input type="text" placeholder="Fecha de Ingreso" value={fecha_ingreso} onChange={(e) => setFecha_ingreso(e.target.value)} />
       <button onClick={handleAddEmpleado}>Agregar Empleado</button>
       <ul>
         {empleados.map((empleado) => (
